@@ -1,0 +1,26 @@
+{% extends "CertBundle:IE8:layout8.html.twig" %} 
+{% block contenido %}
+    {% for message in app.session.flashbag().get('status') %}
+        <div id="mensaje">
+            {{message}}
+        </div>
+    {% endfor %}
+        
+    <div class="formulario">
+        <h3><span class="titulo">IDENTIFICACIÓN DE USUARIO</span></h3>
+        <div>
+            <form id="form-reset-user" name="form-reset-user" action="{{path("login_check")}}" method="post">
+                <strong><label class="etiqueta" for="usuario">Usuario</label></strong>
+                <br/>
+                <input class="texto" name="usuario"  label= 'Usuario' id="nombre-usuario" value='' type="text" >
+                <br/><br/>
+                <strong><label class="etiqueta" for="password">Contraseña</label></strong>
+                <br/>
+                <input class="texto" name="password" label='Contraseña' id="password" value='' type="password">
+                <br/>
+                <br/>
+                <button class="boton-pq" type="submit">Entrar</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

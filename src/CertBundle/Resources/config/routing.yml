@@ -1,0 +1,29 @@
+cert_homepage:
+    path:     /
+    defaults: { _controller: CertBundle:Default:index }
+login:
+    path:     /login
+    defaults: { _controller: CertBundle:Login:login }
+    options:
+        expose: true
+login_check:
+    path:     /login/check
+    defaults: { _controller: CertBundle:Login:check }    
+logout:
+    path:     /login/logout
+    defaults: { _controller: CertBundle:Login:logout }    
+descargaCertificado:
+    path:     /certificado/descarga/{usuario_id}
+    defaults: { _controller: CertBundle:Certificado:descarga }    
+    options:
+        expose: true
+envioCorreccion:
+    path:     /certificado/envio/correccion
+    defaults: { _controller: CertBundle:Certificado:envioCorreccion }    
+    options:
+        expose: true        
+cargaFichero:
+    path:     /certificado/carga
+    defaults: { _controller: CertBundle:Certificado:cargaFichero }    
+    options:
+        expose: true        

@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<html lang="es">
+    <head>
+        <meta charset="utf-8"/>
+        <title>
+            {% block title %} WEB DE DESCARGA DE CERTIFICADOS DEL CONCURSO DE MOVILIDAD 2017 {% endblock %}
+        </title>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.js"></script>
+        <script type="text/javascript" src="{{asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <link rel="icon" type="image/png" href="{{asset('img/logoSalud.png')}}" />
+
+
+        
+    </head>
+    <style>
+        .cabecera {
+               display: table-header-group;
+               vertical-align: middle;
+               align-items:  center;
+               font-size: 18px;
+               border-color: inherit;
+               background-color: background;
+               font-style: oblique;
+               font-family: serif;
+        }
+    </style>
+    
+    <script>
+        $( function() {
+            $('.tabla').DataTable({
+                "language": {"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json" },
+                "autoWidth": true,
+                "jQueryUI": true,
+                "stateSave": true,
+                "order":[[1,"desc"]]
+            });
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+    </script>
+               
+    <body>
+        <header>
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="{{path("homepage")}}"> </a>
+                         <span class="navbar-brand">
+                            {% block modo %}
+                            {% endblock %}
+                         <span>
+                    </div>
+   
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="navbar-brand">
+                            {% block menu %}
+                            {% endblock %}
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><span class="navbar-brand" >
+                                {% if ( app.session.get('nombre') !='') %}
+                                    Bienvenido, {{app.session.get('nombre') }}
+                                {% else %}
+                                    Acceda al sistema 
+                                {% endif %}
+                                </span>
+                            </li>
+                                    <li class="dropdown">
+                                    <a href="#" 
+                                       class="dropdown-toggle" 
+                                       data-toggle="dropdown" 
+                                       role="button" 
+                                       aria-haspopup="true" 
+                                       aria-expanded="false"> 
+                                       <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                    {% if ( app.session.get('nombre') != '') %}
+                                        <li><a href="{{path("logout")}}">Salir</a></li>
+                                    {% else %}    
+                                        <li><a href="{{path("login")}}">Entrar</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+        </header>
+                        
+        <section id="contenido">
+            <div id="procesando" class="modal" role="dialog" margin="auto">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-body" text-align="center">
+                            <img src="{{asset('img/Circulo-Carga-62157.gif')}}"></img>
+                            <h3><span>Ejecutando, espere por favor</span></h3>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+            
+                <div class="container"> 
+                    <h3>
+                        {% block titulo %}{% endblock %}
+                    </h3>
+                </div>
+                <div class="container"> 
+                    {% block contenido %} Contenido por Defecto de la Plantilla  {% endblock %}
+                </div>
+        </section>
+        <footer>
+            <br/>
+            <span class="label label-info">Agencia para la Administración Digital de la Comunidad de Madrid &copy;</span>
+        </footer>
+    </body>
+</html>
+

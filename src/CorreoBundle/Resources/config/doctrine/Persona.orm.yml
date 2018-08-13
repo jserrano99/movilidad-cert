@@ -1,0 +1,21 @@
+CorreoBundle\Entity\Persona:
+    type: entity
+    table: personas
+    repositoryClass: CorreoBundle\Repository\PersonaRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        nombre:
+            type: string
+            length: 255
+        email:
+            type: string
+            length: 255
+        fichero:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

@@ -1,0 +1,31 @@
+{% extends "CertBundle:IE8:layout8.html.twig" %} 
+{% block contenido %}
+    {%include "CertBundle:Default:funciones.html.twig" %}
+    <div class="contenido">
+        {% for message in app.session.flashbag().get('status') %}
+            <div>
+                {{message}}
+            </div>
+        {% endfor %}
+        <h2><span>Consulta del Certificado de Servicios Prestados en Atencion Primaria para el Concurso de Movilidad 2017</h2></span>
+        <h4><span>El tiempo que se ha valorado como trabajado en Atención Primaria del SERMAS se ha aportado de oficio por esta
+                  administración y se refleja en el presente Certificado.</span>
+                  <br/>
+            <span>En la baremación, a parte de este certificado, se ha tenido en cuenta los periodos trabajados en otras
+                  instituciones de las que se haya aportado certificado</span>
+        </h4>
+    </div>
+    <div class="contenido">
+        <h3><span>{{app.session.get('nombre')}}</span>
+             <br/>
+             <span>Ultimo Acceso: {{app.session.get('fecha')}}</span>
+            </h3>
+            <br/>
+        <a class="boton"  
+            href="{{path("descargaCertificado",{'usuario_id':app.session.get('usuario_id')})}}">DESCARGA</a>
+        <a class="boton"  
+            href="{{path("logout")}}">SALIR</a>
+        <br/>
+        <br/>
+    </div>
+{% endblock %}

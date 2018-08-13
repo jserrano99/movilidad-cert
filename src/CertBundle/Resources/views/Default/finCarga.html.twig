@@ -1,0 +1,15 @@
+{% extends "CertBundle:Default:layout.html.twig" %} 
+{% block titulo %} PROCESO TERMINADO 
+{% endblock %}
+
+{% block contenido %}
+    <div class="container">
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-warning">
+                {{message|upper}}
+            </div>
+        {% endfor %}
+        
+        <a href="{{path("cert_homepage")}}" class="btn btn-success">Inicio</a>
+    </div>
+{% endblock %}

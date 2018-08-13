@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang="es">
+    <head>
+        <meta charset="utf-8"/>
+        <title>
+            {% block title %} WEB DE DESCARGA DE CERTIFICADOS DEL CONCURSO DE MOVILIDAD 2017 {% endblock %}
+        </title>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="{{asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <link href="{{asset('css/estilosIE8.css')}}" rel="stylesheet" />
+        <link rel="icon" type="image/png" href="{{asset('img/logoSalud.png')}}" />
+
+    </head>
+    <style>
+        .cabecera {
+               display: table-header-group;
+               vertical-align: middle;
+               align-items:  center;
+               font-size: 18px;
+               border-color: inherit;
+               background-color: background;
+               font-style: oblique;
+               font-family: serif;
+        }
+    </style>
+    
+    <script>
+        $( function() {
+            $('.tabla').DataTable({
+                "language": {"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json" },
+                "autoWidth": true,
+                "jQueryUI": true,
+                "stateSave": true,
+                "order":[[1,"desc"]]
+            });
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+    </script>
+
+    <body>
+        <section>
+                <div> 
+                    <h3>
+                        {% block titulo %}
+                            <img class="logo" src= "{{asset('img/saludMadrid@0,5x.png')}}"></img>
+                        {% endblock %}
+                    </h3>
+                </div>
+                <div class="container"> 
+                    {% block contenido %} Contenido por Defecto de la Plantilla  {% endblock %}
+                </div>
+        </section>
+        <footer>
+            <br/>
+            <span> Versión IE8 Agencia para la Administración Digital de la Comunidad de Madrid &copy;</span>
+        </footer>
+    </body>
+</html>
+

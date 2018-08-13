@@ -1,0 +1,23 @@
+<script>
+    $( function() {
+        $("#imagen2").modal("hide");
+     } );
+    function EnviarCorreo(id) {
+      bootbox.confirm("Ejecutar Envio Seleccionado "+id , 
+            function(result){
+                if (result) { 
+                    $("#imagen2").modal("show"); 
+                    // $("#imagen2").css('display','block'); 
+                    var recurso = Routing.generate("addEnviar",{"id":id},true);
+                    $.ajax(recurso)
+                        .done(function(data) {
+                            $("#imagen2").modal("hide"); 
+                        })
+                        .fail(function(data) {
+                             alert ('falla en la llamada');
+                        });
+                }    
+            }
+        ); 
+    }
+</script>

@@ -1,0 +1,30 @@
+<style>
+        .cabecera {
+               display: table-header-group;
+               vertical-align: middle;
+               align-items:  center;
+               font-size: 18px;
+               border-color: inherit;
+               background-color: background;
+               font-style: oblique;
+               font-family: serif;
+        }
+</style>
+    
+{% extends "CertBundle:IE8:layout8.html.twig" %} 
+{% block contenido %}
+    {%include "CertBundle:Default:funciones.html.twig" %}
+    <div class="container jumbotron text-center">
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">
+                {{message}}
+            </div>
+        {% endfor %}
+        <img src= "{{asset('img/saludMadrid.png')}}"></img>
+        <h2><span>Su certificado ha sido enviado a su dirección de correo corporativo {{app.session.get('email')}}</span>
+            <br/>
+            <span>Si no lo ha recibido en unos minutos, revise la carpeta de correo no deseado</span></h2>
+        <a class="btn btn-info btn-lg"  href="{{path("logout")}}">Salir</a>
+        
+    </div>
+{% endblock %}

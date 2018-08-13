@@ -1,0 +1,16 @@
+{% extends "CertBundle:Default:layout.html.twig" %} 
+{% block contenido %}
+    {%include "CertBundle:Default:funciones.html.twig" %}
+    
+    <div class="container jumbotron text-center">
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">
+                {{message|upper}}
+            </div>
+        {% endfor %}
+        <img src= "{{asset('img/saludMadrid.png')}}"></img>
+        <h2><span>ERROR EN LA DESCARGA DEL CERTIFICADO</span></h2>
+        <a class="btn btn-info btn-lg"  href="{{path("logout")}}">Salir</a>
+        
+    </div>
+{% endblock %}

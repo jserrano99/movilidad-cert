@@ -1,0 +1,42 @@
+CertBundle\Entity\LogDescarga:
+    type: entity
+    table: cert_log_descarga
+    repositoryClass: CertBundle\Repository\LogDescargaRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        fcdescarga:
+            type: string
+            length: 255
+        equipo:
+            type: string
+            length: 255
+        ip:
+            type: string
+            length: 255
+    manyToOne:
+        usuario:
+            targetEntity: \CertBundle\Entity\Usuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false 
+        fichero:
+            targetEntity: \CertBundle\Entity\Fichero
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                fichero_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

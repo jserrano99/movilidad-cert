@@ -1,0 +1,59 @@
+{% extends "CorreoBundle::menu.html.twig" %} 
+{% block titulo %} ENVIO MASIVO DE CORREOS: DESTINATARIOS  
+    <br/>
+    <a href="{{path("queryCorreo")}}" class="btn btn-success">Volver</a>
+    <input type="button" 
+          class="btn btn-info" 
+          title="Enviar" value=" Enviar " 
+          onClick="EnviarCorreo({{Correo.id}})">  
+{% endblock %}
+    
+{% block contenido %}
+    {% include "CorreoBundle:Correo:funciones.html.twig" %}
+
+    <div class="container">
+        <h4>Correo:{{Correo.asunto}}<h4/>
+        <hr/>
+        <h4>Nuevo Destinatario</h4>
+        {{form_start (form,{'action':'','method':'POST'})}}
+        {{form_end (form)}}
+    </div>
+      <div id="imagen2" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content modal-lg">
+                    <div class="modal-body " text-align="center">
+                        <img src="../../img/Circulo-Carga-62157.gif"></img>
+                        <h2><span>Realizando Envio no cierre el navegador....</span></h2>               
+                    </div>
+                </div>    
+            </div>
+        </div>
+    <div class="container">
+        <h4>Destinatarios</h4><hr/>
+        <table class="tabla table" border="1">
+            <thead>
+                <tr class="success">
+                    <th class="text-center text-bold">ID</th>
+                    <th class="text-center text-bold">Nombre y Apellidos</th>
+                    <th class="text-center text-bold">Correo Electrónico</th>
+                    <th class="text-center text-bold">Certificado</th>
+                    <th class="text-center text-bold">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for Destinatario in Destinatarios %}
+                    <tr>
+                        <td class="text-center">{{Destinatario.id}}</td>
+                        <td>{{Destinatario.nombre}}</td>
+                        <td>{{Destinatario.email}}</td>
+                        <td>{{Destinatario.fichero}}</td>
+                        <td class="text-center">
+                           <a href="{{path("editPersona",{ "id":Destinatario.persona_id })}}" class="btn btn-warning">Editar</a>
+                           <a href="{{path("deleteDestinatario",{ "id":Destinatario.id })}}" class="btn btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

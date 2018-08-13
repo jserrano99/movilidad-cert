@@ -1,0 +1,17 @@
+{% extends "CertBundle:IE8:layout8.html.twig" %} 
+{% block contenido %}
+    {%include "CertBundle:Default:funciones.html.twig" %}
+    
+    <div class="contenido">
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">
+                {{message}}
+            </div>
+        {% endfor %}
+        <h2><span>ERROR EN LA DESCARGA DEL CERTIFICADO</span></h2>
+        <br/>
+        <a class="boton"  href="{{path("logout")}}">Salir</a>
+        <br/>
+        <br/>
+    </div>
+{% endblock %}

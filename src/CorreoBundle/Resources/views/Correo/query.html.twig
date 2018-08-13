@@ -1,0 +1,56 @@
+{% extends "CorreoBundle::menu.html.twig" %} 
+{% block titulo %} ENVIO MASIVO DE CORREOS {% endblock %}
+{% block contenido %}
+    {% include "CorreoBundle:Correo:funciones.html.twig" %}
+    <div class="container">
+        {% for message in app.session.flashbag().get('status') %}
+            <div class="alert alert-success">
+                {{message}}
+            </div>
+        {% endfor %}
+        <a href="{{path("addCorreo")}}" class="btn btn-success">Nuevo Correo</a>
+        <hr/>
+        <div id="imagen2" class="modal fade container">
+            <div class="modal-dialog">
+                <div class="modal-content modal-lg">
+                    <div class="modal-body " text-align="center">
+                        <img src="../../img/Circulo-Carga-62157.gif"></img>
+                        <h2><span>Realizando Envio no cierre el navegador....</span></h2>               
+                    </div>
+                </div>    
+            </div>
+        </div>
+
+        <table class="tabla table" border="1">
+            <thead>
+                <tr class="success">
+                    <th class="text-center text-bold">ID</th>
+                    <th class="text-center text-bold">Fecha Envio</th>
+                    <th class="text-center text-bold">Asunto</th>
+					<th class="text-center text-bold">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for Correo in Correos %}
+                    <tr>
+                        <td class="text-center">{{Correo.id}}</td>
+						<td class="text-center">{{Correo.asunto}}</td>
+						<td class="text-center">{{Correo.estadoCorreo.estado}}</td>
+						<td class="text-center"> 
+                             <a href="{{path('editCorreo',{ "id":Correo.id })}}" 
+                               class="btn btn-success">Editar
+                            </a>
+                            <a href="{{path("deleteCorreo",{ "id":Correo.id })}}" 
+                               class="btn btn-danger">Eliminar
+                            </a>
+                            <input type="button" 
+                                  class="btn btn-info" 
+                                  title="Reenviar" value=" Reenviar " 
+                                  onClick="EnviarCorreo({{Correo.id}})">  
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

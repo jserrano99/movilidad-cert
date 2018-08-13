@@ -1,0 +1,9 @@
+{% extends "papBundle::layout.html.twig" %} 
+{% block menu %}
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="{{path("pap_homepage")}}">Menu Principal</a></li>
+        <li><a href="{{path("queryCorreo")}}">Consulta</a></li>
+        <li><a href="{{path("addCorreo")}}">Nuevo Correo</a></li>
+        <li><a href="{{path("queryPersona")}}">Destinatarios</a></li>
+    </ul>    
+{%endblock%}                                    

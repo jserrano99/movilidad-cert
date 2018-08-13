@@ -1,0 +1,21 @@
+CertBundle\Entity\Usuario:
+    type: entity
+    table: cert_usuario
+    repositoryClass: CertBundle\Repository\UsuarioRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        dni:
+            type: string
+            length: '15'
+        nombre:
+            type: string
+            length: 255
+        email:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

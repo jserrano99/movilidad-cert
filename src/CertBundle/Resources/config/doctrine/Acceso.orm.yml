@@ -1,0 +1,25 @@
+CertBundle\Entity\Acceso:
+    type: entity
+    table: cert_acceso
+    repositoryClass: CertBundle\Repository\AccesoRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        fcacceso:
+            type: string
+    manyToOne:
+        usuario:
+            targetEntity: \CertBundle\Entity\Usuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false  
+    lifecycleCallbacks: {  }

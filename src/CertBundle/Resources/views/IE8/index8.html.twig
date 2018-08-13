@@ -1,0 +1,11 @@
+{% extends "CertBundle:IE8:layout8.html.twig" %} 
+{% block contenido %}
+    {%include "CertBundle:Default:funciones.html.twig" %}
+    
+    <div class="contenido">
+        <h2><span>Bienvenido a la web de Descarga del Certificado de Servicios Prestados en Atención Primaria para el Concurso De Movilidad 2017</span></h2>
+        <br/><br/>
+        <a class="boton" href="{{path("login")}}">Acceder </a>
+        <br/><br/>
+    </div>
+{% endblock %}

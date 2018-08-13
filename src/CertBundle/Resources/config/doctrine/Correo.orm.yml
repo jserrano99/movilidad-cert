@@ -1,0 +1,22 @@
+CertBundle\Entity\Correo:
+    type: entity
+    table: cert_correo
+    repositoryClass: CertBundle\Repository\CorreoRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    manyToOne:
+        usuario:
+            targetEntity: \CertBundle\Entity\Usuario
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                usuario_id:
+                    referencedColumnName: id
+            orphanRemoval: false  
+    lifecycleCallbacks: {  }

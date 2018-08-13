@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="movilidad-cert-local" id="Project_55f7dfe" template="Default" database="MySql" >
+	<schema name="jano" catalogname="jano" >
+		<table name="adjuntos" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="correo_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="fichero" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="descripcion" type="varchar" length="255" decimal="0" jt="12" />
+			<index name="pk_adjuntos" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_adjuntos" unique="NORMAL" >
+				<column name="correo_id" />
+			</index>
+			<fk name="adjuntos_ibfk_1" to_schema="jano" to_table="correos" >
+				<fk_column name="correo_id" pk="id" />
+			</fk>
+		</table>
+		<table name="cert_acceso" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="usuario_id" type="int" jt="4" />
+			<column name="fcacceso" type="varchar" length="255" jt="12" />
+			<index name="pk_cert_acceso_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_cert_acceso_usuario_id" unique="NORMAL" >
+				<column name="usuario_id" />
+			</index>
+			<fk name="fk_cert_acceso_cert_usuario" to_schema="jano" to_table="cert_usuario" delete_action="restrict" >
+				<fk_column name="usuario_id" pk="id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="cert_corregidos" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="dni" type="varchar" length="15" decimal="0" jt="12" />
+			<column name="nombre" type="varchar" length="50" decimal="0" jt="12" />
+			<column name="apellido1" type="varchar" length="50" decimal="0" jt="12" />
+			<column name="apellido2" type="varchar" length="50" decimal="0" jt="12" />
+			<index name="pk_cert_corregidos" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="cert_correo" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="usuario_id" type="int" length="10" decimal="0" jt="4" />
+			<index name="pk_cert_correo" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_cert_correo_usuario_id" unique="NORMAL" >
+				<column name="usuario_id" />
+			</index>
+			<fk name="fk_cert_correo_cert_usuario" to_schema="jano" to_table="cert_usuario" >
+				<fk_column name="usuario_id" pk="id" />
+			</fk>
+		</table>
+		<table name="cert_ficheros" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="dni" type="varchar" length="15" jt="12" mandatory="y" />
+			<column name="fichero" type="varchar" length="255" jt="12" />
+			<column name="nombre" type="varchar" length="255" jt="12" />
+			<index name="pk_cert_ficheros_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="uk_dni" unique="UNIQUE" >
+				<column name="dni" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="cert_log_descarga" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="usuario_id" type="int" jt="4" mandatory="y" />
+			<column name="fichero_id" type="int" jt="4" />
+			<column name="fcdescarga" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="equipo" type="varchar" length="255" jt="12" />
+			<column name="ip" type="varchar" length="255" jt="12" />
+			<index name="pk_cert_log_descarga_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_cert_log_descarga_usuario_id" unique="NORMAL" >
+				<column name="usuario_id" />
+			</index>
+			<index name="idx_cert_log_descarga_fichero_id" unique="NORMAL" >
+				<column name="fichero_id" />
+			</index>
+			<fk name="fk_cert_log_descarga" to_schema="jano" to_table="cert_usuario" delete_action="restrict" >
+				<fk_column name="usuario_id" pk="id" />
+			</fk>
+			<fk name="fk_cert_log_descarga_1" to_schema="jano" to_table="cert_ficheros" delete_action="restrict" >
+				<fk_column name="fichero_id" pk="id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="cert_usuario" >
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" />
+			<column name="dni" type="varchar" length="15" jt="12" />
+			<column name="nombre" type="varchar" length="255" jt="12" />
+			<column name="email" type="varchar" length="255" jt="12" />
+			<index name="pk_cert_usuario_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="correos" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="asunto" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="cuerpo" type="text" length="65535" decimal="0" jt="-1" />
+			<column name="fecha" type="date" length="10" decimal="0" jt="91" />
+			<column name="estado_correo_id" type="int" length="10" decimal="0" jt="4" />
+			<index name="pk_correos" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_correos" unique="NORMAL" >
+				<column name="estado_correo_id" />
+			</index>
+			<fk name="correos_ibfk_1" to_schema="jano" to_table="estado_correo" >
+				<fk_column name="estado_correo_id" pk="id" />
+			</fk>
+		</table>
+		<table name="destinatarios" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="correo_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="persona_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<index name="pk_destinatarios" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_destinatarios_correo" unique="NORMAL" >
+				<column name="correo_id" />
+			</index>
+			<index name="idx_destinatarios_socios" unique="NORMAL" >
+				<column name="persona_id" />
+			</index>
+			<fk name="destinatarios_ibfk_1" to_schema="jano" to_table="correos" >
+				<fk_column name="correo_id" pk="id" />
+			</fk>
+			<fk name="destinatarios_ibfk_2" to_schema="jano" to_table="personas" >
+				<fk_column name="persona_id" pk="id" />
+			</fk>
+		</table>
+		<table name="elemento" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="nombre" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="modulo_id" type="int" length="10" decimal="0" jt="4" />
+			<column name="path2" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="path_id" type="int" length="10" decimal="0" jt="4" />
+			<index name="pk_elemento" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_modulo" unique="NORMAL" >
+				<column name="modulo_id" />
+			</index>
+			<index name="path_id" unique="NORMAL" >
+				<column name="path_id" />
+			</index>
+			<fk name="fk_elemento_modulo" to_schema="jano" to_table="modulo" >
+				<fk_column name="modulo_id" pk="id" />
+			</fk>
+			<fk name="fk_elemento_path" to_schema="jano" to_table="path" >
+				<fk_column name="path_id" pk="id" />
+			</fk>
+		</table>
+		<table name="elementoapasar" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="pasoprod_id" type="int" length="10" decimal="0" jt="4" />
+			<column name="elemento_id" type="int" length="10" decimal="0" jt="4" />
+			<column name="itpaso" type="boolean" decimal="0" jt="-7" />
+			<column name="fecha" type="varchar" length="50" decimal="0" jt="12" />
+			<index name="pk_elementoapasar" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idxControlDup" unique="UNIQUE" >
+				<column name="pasoprod_id" />
+				<column name="elemento_id" />
+			</index>
+			<index name="idx_elemento" unique="NORMAL" >
+				<column name="elemento_id" />
+			</index>
+			<index name="idx_pasoprod" unique="NORMAL" >
+				<column name="pasoprod_id" />
+			</index>
+			<fk name="fk_elementoapasar_elemento" to_schema="jano" to_table="elemento" >
+				<fk_column name="elemento_id" pk="id" />
+			</fk>
+			<fk name="elementoapasar_ibfk_2" to_schema="jano" to_table="pasoprod" delete_action="cascade" update_action="cascade" >
+				<fk_column name="pasoprod_id" pk="id" />
+			</fk>
+		</table>
+		<table name="encargo" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="numero" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="titulo" type="varchar" length="255" decimal="0" jt="12" />
+			<column name="comentario" type="text" length="65535" decimal="0" jt="-1" />
+			<index name="pk_encargo" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="estado" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="nombre" type="varchar" length="255" decimal="0" jt="12" />
+			<index name="pk_estado" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="estado_correo" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="estado" type="varchar" length="255" decimal="0" jt="12" />
+			<index name="pk_estado_correo" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="modo" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="nombre" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<index name="pk_modo" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="modulo" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="texto" type="varchar" length="255" decimal="0" jt="12" />
+			<index name="pk_modulo" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="parametro" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="nombre" type="varchar" length="15" decimal="0" jt="12" mandatory="y" />
+			<column name="valor" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<index name="pk_parametro" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="pasoprod" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="fecha" type="date" length="10" decimal="0" jt="91" />
+			<column name="comentario" type="text" length="65535" decimal="0" jt="-1" />
+			<column name="estado_id" type="int" length="10" decimal="0" jt="4" />
+			<column name="usuario_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="titulo" type="varchar" length="255" decimal="0" jt="12" />
+			<index name="pk_pasoprod" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_estado" unique="NORMAL" >
+				<column name="estado_id" />
+			</index>
+			<index name="idx_usuario" unique="NORMAL" >
+				<column name="usuario_id" />
+			</index>
+			<fk name="pasoprod_ibfk_1" to_schema="jano" to_table="estado" >
+				<fk_column name="estado_id" pk="id" />
+			</fk>
+			<fk name="pasoprod_ibfk_2" to_schema="jano" to_table="usuario" >
+				<fk_column name="usuario_id" pk="id" />
+			</fk>
+		</table>
+		<table name="pasoprodencargo" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="nmencargo" type="int" length="10" decimal="0" jt="4" />
+			<column name="pasoprod_id" type="int" length="10" decimal="0" jt="4" />
+			<column name="encargo_id" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<index name="pk_pasoprodencargo" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_encargo" unique="NORMAL" >
+				<column name="encargo_id" />
+			</index>
+			<index name="idx_pasoprod" unique="NORMAL" >
+				<column name="pasoprod_id" />
+			</index>
+			<fk name="pasoprodencargo_ibfk_2" to_schema="jano" to_table="encargo" >
+				<fk_column name="encargo_id" pk="id" />
+			</fk>
+			<fk name="pasoprodencargo_ibfk_1" to_schema="jano" to_table="pasoprod" delete_action="cascade" update_action="cascade" >
+				<fk_column name="pasoprod_id" pk="id" />
+			</fk>
+		</table>
+		<table name="path" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="path" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<index name="pk_path" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="personas" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="nombre" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="email" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="fichero" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<index name="pk_personas" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="usuario" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="codigo" type="varchar" length="15" decimal="0" jt="12" mandatory="y" />
+			<column name="nombre" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="apellidos" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="perfil" type="varchar" length="25" decimal="0" jt="12" mandatory="y" />
+			<column name="email" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="estado" type="int" length="10" decimal="0" jt="4" mandatory="y" />
+			<column name="password" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="modo_id" type="int" length="10" decimal="0" jt="4" mandatory="y" >
+				<defo>1</defo>
+			</column>
+			<column name="ip" type="varchar" length="50" decimal="0" jt="12" />
+			<index name="pk_usuario" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_modo" unique="NORMAL" >
+				<column name="modo_id" />
+			</index>
+			<fk name="fk_usuario_modo" to_schema="jano" to_table="modo" >
+				<fk_column name="modo_id" pk="id" />
+			</fk>
+		</table>
+	</schema>
+	<connector name="DESARROLLO" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.46-bin.jar" driver_desc="Standard" host="icmbdlds005.madrid.org" port="3306" instance="jano" user="proco_jano" passwd="cHJvY29famFubw==" />
+	<connector name="PRODUCCIÓN" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.46-bin.jar" driver_desc="Standard" host="icmbdlpr008.madrid.org" port="3306" instance="jano" user="proco_jano" passwd="cHJvY29famFubw==" />
+	<connector name="VALIDACION" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.46-bin.jar" driver_desc="Standard" host="icmbdlva003.madrid.org" port="3306" instance="jano" user="proco_jano" passwd="cHJvY29famFubw==" />
+	<connector name="movilidad-cert-local" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.46-bin.jar" driver_desc="Standard" host="localhost" port="3306" instance="jano" user="root" />
+	<layout name="CERTIFICADOS" id="Layout_241de89" show_relation="columns" >
+		<entity schema="jano" name="cert_usuario" color="C1D8EE" x="48" y="224" />
+		<entity schema="jano" name="cert_log_descarga" color="C1D8EE" x="256" y="240" />
+		<entity schema="jano" name="cert_correo" color="3986C1" x="64" y="496" />
+		<entity schema="jano" name="cert_corregidos" color="3986C1" x="192" y="496" />
+		<entity schema="jano" name="cert_acceso" color="C1D8EE" x="112" y="48" />
+		<entity schema="jano" name="cert_ficheros" color="C1D8EE" x="464" y="272" />
+		<script name="Sql_Editor" id="Editor_164ca70" language="SQL" >
+			<string><![CDATA[select * from cert_ficheros  inner join cert_usuario on cert_usuario.dni = cert_ficheros.dni  where cert_usuario.id = 1]]></string>
+		</script>
+	</layout>
+	<layout name="Default Layout" id="Layout_51dd7a1" show_relation="columns" >
+		<entity schema="jano" name="adjuntos" color="C8F5BF" x="1136" y="224" />
+		<entity schema="jano" name="correos" color="C8F5BF" x="1136" y="48" />
+		<entity schema="jano" name="estado_correo" color="C8F5BF" x="1312" y="224" />
+		<entity schema="jano" name="parametro" color="C1D8EE" x="48" y="544" />
+		<entity schema="jano" name="pasoprod" color="BFD4F5" x="608" y="64" />
+		<entity schema="jano" name="personas" color="C8F5BF" x="1456" y="48" />
+		<entity schema="jano" name="usuario" color="BFD4F5" x="752" y="256" />
+		<entity schema="jano" name="destinatarios" color="C8F5BF" x="1312" y="48" />
+		<entity schema="jano" name="elementoapasar" color="F5DDBF" x="400" y="128" />
+		<entity schema="jano" name="elemento" color="F5DDBF" x="160" y="256" />
+		<entity schema="jano" name="path" color="F5DDBF" x="320" y="336" />
+		<entity schema="jano" name="modulo" color="F5DDBF" x="176" y="432" />
+		<entity schema="jano" name="estado" color="BFD4F5" x="560" y="320" />
+		<entity schema="jano" name="modo" color="BFD4F5" x="960" y="304" />
+		<entity schema="jano" name="encargo" color="BFD4F5" x="960" y="64" />
+		<entity schema="jano" name="pasoprodencargo" color="BFD4F5" x="784" y="64" />
+	</layout>
+	<layout name="Sample Layout with Tools" id="Layout_3e5638c" show_column_type="y" show_relation="columns" >
+		<entity schema="jano" name="adjuntos" color="C8F5BF" x="672" y="336" />
+		<entity schema="jano" name="correos" color="C8F5BF" x="704" y="144" />
+		<entity schema="jano" name="destinatarios" color="C8F5BF" x="896" y="144" />
+		<entity schema="jano" name="elemento" color="F5DDBF" x="672" y="640" />
+		<entity schema="jano" name="elementoapasar" color="F5DDBF" x="864" y="640" />
+		<entity schema="jano" name="encargo" color="BFD4F5" x="416" y="144" />
+		<entity schema="jano" name="estado" color="BFD4F5" x="48" y="352" />
+		<entity schema="jano" name="estado_correo" color="C8F5BF" x="896" y="336" />
+		<entity schema="jano" name="modo" color="BFD4F5" x="448" y="352" />
+		<entity schema="jano" name="modulo" color="F5DDBF" x="864" y="832" />
+		<entity schema="jano" name="parametro" color="C1D8EE" x="48" y="640" />
+		<entity schema="jano" name="pasoprod" color="BFD4F5" x="48" y="144" />
+		<entity schema="jano" name="pasoprodencargo" color="BFD4F5" x="240" y="144" />
+		<entity schema="jano" name="path" color="F5DDBF" x="672" y="832" />
+		<entity schema="jano" name="personas" color="C8F5BF" x="1072" y="144" />
+		<entity schema="jano" name="usuario" color="BFD4F5" x="240" y="352" />
+		<callout x="48" y="80" pointer="NO" >
+			<comment><![CDATA[Double-click any table, column or foreign key to edit, right-click to start one of the tools below.
+Use the Relational Data Browse for simultaneously exploring data from multiple tables.
+All tools will be saved to project file and can be reopen.]]></comment>
+		</callout>
+		<group name="pasoprod" color="ECF0F7" >
+			<entity schema="jano" name="pasoprod" />
+			<entity schema="jano" name="pasoprodencargo" />
+			<entity schema="jano" name="usuario" />
+			<entity schema="jano" name="encargo" />
+			<entity schema="jano" name="estado" />
+			<entity schema="jano" name="modo" />
+		</group>
+		<group name="correos" color="EEF7EC" >
+			<entity schema="jano" name="correos" />
+			<entity schema="jano" name="destinatarios" />
+			<entity schema="jano" name="estado_correo" />
+			<entity schema="jano" name="adjuntos" />
+			<entity schema="jano" name="personas" />
+		</group>
+		<group name="elemento" color="F7F3EC" >
+			<entity schema="jano" name="elemento" />
+			<entity schema="jano" name="elementoapasar" />
+			<entity schema="jano" name="modulo" />
+			<entity schema="jano" name="path" />
+		</group>
+		<script name="Sample SQL Editor" id="Editor_19ff80e" language="SQL" >
+			<string><![CDATA[SELECT * 
+FROM
+	jano.pasoprod d;]]></string>
+		</script>
+		<browser id="Browse_2ce2615" name="Sample Relational Data Browse" confirm_updates="y" >
+			<browse_table schema="jano" entity="pasoprod" x="20" y="20" width="400" height="300" >
+				<browse_table schema="jano" entity="elementoapasar" fk="elementoapasar_ibfk_2" x="440" y="20" width="400" height="300" >
+					<browse_table schema="jano" entity="elemento" fk="fk_elementoapasar_elemento" x="860" y="20" width="400" height="300" record_view="y" />
+				</browse_table>
+			</browse_table>
+		</browser>
+		<query id="Query_223193b" name="Sample Query Builder" >
+			<query_table schema="jano" name="pasoprod" alias="p" x="48" y="48" >
+				<column name="id" />
+				<column name="fecha" />
+				<column name="comentario" />
+				<column name="estado_id" />
+				<column name="usuario_id" />
+				<column name="titulo" />
+				<query_table schema="jano" name="elementoapasar" alias="e" x="192" y="48" fk="elementoapasar_ibfk_2" type="Inner Join" >
+					<column name="id" />
+					<column name="pasoprod_id" />
+					<column name="elemento_id" />
+					<column name="itpaso" />
+					<column name="fecha" />
+					<query_table schema="jano" name="elemento" alias="e1" x="368" y="48" fk="fk_elementoapasar_elemento" type="Inner Join" >
+						<column name="id" />
+						<column name="nombre" />
+						<column name="modulo_id" />
+						<column name="path2" />
+						<column name="path_id" />
+					</query_table>
+				</query_table>
+			</query_table>
+		</query>
+	</layout>
+</project>

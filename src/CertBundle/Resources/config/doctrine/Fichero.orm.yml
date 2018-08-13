@@ -1,0 +1,21 @@
+CertBundle\Entity\Fichero:
+    type: entity
+    table: cert_ficheros
+    repositoryClass: CertBundle\Repository\FicheroRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        dni:
+            type: string
+            length: 15
+        nombre:
+            type: string
+            length: 255
+        fichero:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }
