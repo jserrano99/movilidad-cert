@@ -208,6 +208,70 @@
 				<column name="id" />
 			</index>
 		</table>
+		<table name="jano_ctrl_error" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="proceso_fase_id" type="int" length="10" decimal="0" jt="4" />
+			<column name="fecha" type="datetime" length="19" decimal="0" jt="93" />
+			<column name="descripcion" type="varchar" length="255" decimal="0" jt="12" />
+			<index name="pk_jano_ctrl_error" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_jano_ctrl_error_proceso_fase_id" unique="NORMAL" >
+				<column name="proceso_fase_id" />
+			</index>
+			<fk name="fk_jano_ctrl_error" to_schema="jano" to_table="jano_ctrl_proceso_fase" delete_action="cascade" >
+				<fk_column name="proceso_fase_id" pk="id" />
+			</fk>
+		</table>
+		<table name="jano_ctrl_estado" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="descripcion" type="varchar" length="255" decimal="0" jt="12" />
+			<index name="pk_jano_ctrl_estado" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="jano_ctrl_fase" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="descripcion" type="varchar" length="255" decimal="0" jt="12" />
+			<index name="pk_jano_ctrl_fase" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="jano_ctrl_log" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="fecha" type="datetime" length="19" decimal="0" jt="93" />
+			<column name="proceso_fase_id" type="int" length="10" decimal="0" jt="4" />
+			<column name="descripcion" type="varchar" length="255" decimal="0" jt="12" />
+			<index name="pk_jano_ctrl_log" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_jano_ctrl_log_proceso_fase_id" unique="NORMAL" >
+				<column name="proceso_fase_id" />
+			</index>
+			<fk name="fk_jano_ctrl_log" to_schema="jano" to_table="jano_ctrl_proceso_fase" delete_action="cascade" >
+				<fk_column name="proceso_fase_id" pk="id" />
+			</fk>
+		</table>
+		<table name="jano_ctrl_proceso_fase" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
+			<column name="proceso_id" type="int" length="10" decimal="0" jt="4" />
+			<column name="fase_id" type="int" length="10" decimal="0" jt="4" />
+			<column name="estado_id" type="int" length="10" decimal="0" jt="4" />
+			<column name="inicio" type="datetime" length="19" decimal="0" jt="93" />
+			<column name="fin" type="datetime" length="19" decimal="0" jt="93" />
+			<index name="pk_jano_ctrl_proceso_fase" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_jano_ctrl_proceso_fase_estado_id" unique="NORMAL" >
+				<column name="estado_id" />
+			</index>
+			<index name="idx_jano_ctrl_proceso_fase_fase_id" unique="NORMAL" >
+				<column name="fase_id" />
+			</index>
+			<index name="idx_jano_ctrl_proceso_fase_proceso_id" unique="NORMAL" >
+				<column name="proceso_id" />
+			</index>
+		</table>
 		<table name="modo" >
 			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" autoincrement="y" />
 			<column name="nombre" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
@@ -329,102 +393,33 @@
 			<string><![CDATA[select * from cert_ficheros  inner join cert_usuario on cert_usuario.dni = cert_ficheros.dni  where cert_usuario.id = 1]]></string>
 		</script>
 	</layout>
-	<layout name="Default Layout" id="Layout_51dd7a1" show_relation="columns" >
-		<entity schema="jano" name="adjuntos" color="C8F5BF" x="1136" y="224" />
-		<entity schema="jano" name="correos" color="C8F5BF" x="1136" y="48" />
-		<entity schema="jano" name="estado_correo" color="C8F5BF" x="1312" y="224" />
-		<entity schema="jano" name="parametro" color="C1D8EE" x="48" y="544" />
-		<entity schema="jano" name="pasoprod" color="BFD4F5" x="608" y="64" />
-		<entity schema="jano" name="personas" color="C8F5BF" x="1456" y="48" />
-		<entity schema="jano" name="usuario" color="BFD4F5" x="752" y="256" />
-		<entity schema="jano" name="destinatarios" color="C8F5BF" x="1312" y="48" />
-		<entity schema="jano" name="elementoapasar" color="F5DDBF" x="400" y="128" />
-		<entity schema="jano" name="elemento" color="F5DDBF" x="160" y="256" />
-		<entity schema="jano" name="path" color="F5DDBF" x="320" y="336" />
-		<entity schema="jano" name="modulo" color="F5DDBF" x="176" y="432" />
-		<entity schema="jano" name="estado" color="BFD4F5" x="560" y="320" />
-		<entity schema="jano" name="modo" color="BFD4F5" x="960" y="304" />
-		<entity schema="jano" name="encargo" color="BFD4F5" x="960" y="64" />
-		<entity schema="jano" name="pasoprodencargo" color="BFD4F5" x="784" y="64" />
-	</layout>
-	<layout name="Sample Layout with Tools" id="Layout_3e5638c" show_column_type="y" show_relation="columns" >
-		<entity schema="jano" name="adjuntos" color="C8F5BF" x="672" y="336" />
-		<entity schema="jano" name="correos" color="C8F5BF" x="704" y="144" />
-		<entity schema="jano" name="destinatarios" color="C8F5BF" x="896" y="144" />
-		<entity schema="jano" name="elemento" color="F5DDBF" x="672" y="640" />
-		<entity schema="jano" name="elementoapasar" color="F5DDBF" x="864" y="640" />
-		<entity schema="jano" name="encargo" color="BFD4F5" x="416" y="144" />
-		<entity schema="jano" name="estado" color="BFD4F5" x="48" y="352" />
-		<entity schema="jano" name="estado_correo" color="C8F5BF" x="896" y="336" />
-		<entity schema="jano" name="modo" color="BFD4F5" x="448" y="352" />
-		<entity schema="jano" name="modulo" color="F5DDBF" x="864" y="832" />
-		<entity schema="jano" name="parametro" color="C1D8EE" x="48" y="640" />
-		<entity schema="jano" name="pasoprod" color="BFD4F5" x="48" y="144" />
-		<entity schema="jano" name="pasoprodencargo" color="BFD4F5" x="240" y="144" />
-		<entity schema="jano" name="path" color="F5DDBF" x="672" y="832" />
-		<entity schema="jano" name="personas" color="C8F5BF" x="1072" y="144" />
-		<entity schema="jano" name="usuario" color="BFD4F5" x="240" y="352" />
-		<callout x="48" y="80" pointer="NO" >
-			<comment><![CDATA[Double-click any table, column or foreign key to edit, right-click to start one of the tools below.
-Use the Relational Data Browse for simultaneously exploring data from multiple tables.
-All tools will be saved to project file and can be reopen.]]></comment>
-		</callout>
-		<group name="pasoprod" color="ECF0F7" >
-			<entity schema="jano" name="pasoprod" />
-			<entity schema="jano" name="pasoprodencargo" />
-			<entity schema="jano" name="usuario" />
-			<entity schema="jano" name="encargo" />
-			<entity schema="jano" name="estado" />
-			<entity schema="jano" name="modo" />
-		</group>
-		<group name="correos" color="EEF7EC" >
-			<entity schema="jano" name="correos" />
-			<entity schema="jano" name="destinatarios" />
-			<entity schema="jano" name="estado_correo" />
-			<entity schema="jano" name="adjuntos" />
-			<entity schema="jano" name="personas" />
-		</group>
-		<group name="elemento" color="F7F3EC" >
-			<entity schema="jano" name="elemento" />
-			<entity schema="jano" name="elementoapasar" />
-			<entity schema="jano" name="modulo" />
-			<entity schema="jano" name="path" />
-		</group>
-		<script name="Sample SQL Editor" id="Editor_19ff80e" language="SQL" >
-			<string><![CDATA[SELECT * 
-FROM
-	jano.pasoprod d;]]></string>
-		</script>
-		<browser id="Browse_2ce2615" name="Sample Relational Data Browse" confirm_updates="y" >
-			<browse_table schema="jano" entity="pasoprod" x="20" y="20" width="400" height="300" >
-				<browse_table schema="jano" entity="elementoapasar" fk="elementoapasar_ibfk_2" x="440" y="20" width="400" height="300" >
-					<browse_table schema="jano" entity="elemento" fk="fk_elementoapasar_elemento" x="860" y="20" width="400" height="300" record_view="y" />
-				</browse_table>
-			</browse_table>
-		</browser>
-		<query id="Query_223193b" name="Sample Query Builder" >
-			<query_table schema="jano" name="pasoprod" alias="p" x="48" y="48" >
-				<column name="id" />
-				<column name="fecha" />
-				<column name="comentario" />
-				<column name="estado_id" />
-				<column name="usuario_id" />
-				<column name="titulo" />
-				<query_table schema="jano" name="elementoapasar" alias="e" x="192" y="48" fk="elementoapasar_ibfk_2" type="Inner Join" >
-					<column name="id" />
-					<column name="pasoprod_id" />
-					<column name="elemento_id" />
-					<column name="itpaso" />
-					<column name="fecha" />
-					<query_table schema="jano" name="elemento" alias="e1" x="368" y="48" fk="fk_elementoapasar_elemento" type="Inner Join" >
-						<column name="id" />
-						<column name="nombre" />
-						<column name="modulo_id" />
-						<column name="path2" />
-						<column name="path_id" />
-					</query_table>
-				</query_table>
-			</query_table>
-		</query>
+	<layout name="GENERAL" id="Layout_51dd7a1" show_relation="columns" >
+		<entity schema="jano" name="adjuntos" color="C8F5BF" x="1184" y="288" />
+		<entity schema="jano" name="correos" color="C8F5BF" x="1184" y="112" />
+		<entity schema="jano" name="estado_correo" color="C8F5BF" x="1360" y="288" />
+		<entity schema="jano" name="parametro" color="C1D8EE" x="96" y="608" />
+		<entity schema="jano" name="pasoprod" color="BFD4F5" x="656" y="128" />
+		<entity schema="jano" name="personas" color="C8F5BF" x="1504" y="112" />
+		<entity schema="jano" name="usuario" color="BFD4F5" x="800" y="320" />
+		<entity schema="jano" name="destinatarios" color="C8F5BF" x="1360" y="112" />
+		<entity schema="jano" name="elementoapasar" color="F5DDBF" x="448" y="192" />
+		<entity schema="jano" name="elemento" color="F5DDBF" x="208" y="320" />
+		<entity schema="jano" name="path" color="F5DDBF" x="368" y="400" />
+		<entity schema="jano" name="modulo" color="F5DDBF" x="224" y="496" />
+		<entity schema="jano" name="estado" color="BFD4F5" x="608" y="384" />
+		<entity schema="jano" name="modo" color="BFD4F5" x="1008" y="368" />
+		<entity schema="jano" name="encargo" color="BFD4F5" x="1008" y="128" />
+		<entity schema="jano" name="pasoprodencargo" color="BFD4F5" x="832" y="128" />
+		<entity schema="jano" name="cert_acceso" color="3986C1" x="48" y="48" />
+		<entity schema="jano" name="cert_corregidos" color="3986C1" x="48" y="48" />
+		<entity schema="jano" name="cert_correo" color="3986C1" x="48" y="48" />
+		<entity schema="jano" name="jano_ctrl_log" color="3986C1" x="752" y="640" />
+		<entity schema="jano" name="jano_ctrl_estado" color="3986C1" x="1104" y="704" />
+		<entity schema="jano" name="cert_usuario" color="3986C1" x="336" y="720" />
+		<entity schema="jano" name="jano_ctrl_proceso_fase" color="3986C1" x="1168" y="512" />
+		<entity schema="jano" name="jano_ctrl_fase" color="3986C1" x="1472" y="512" />
+		<entity schema="jano" name="jano_ctrl_error" color="3986C1" x="928" y="512" />
+		<entity schema="jano" name="cert_log_descarga" color="3986C1" x="496" y="624" />
+		<entity schema="jano" name="cert_ficheros" color="3986C1" x="224" y="672" />
 	</layout>
 </project>

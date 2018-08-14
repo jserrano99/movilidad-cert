@@ -9,7 +9,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 use CertBundle\Entity\LogDescarga;
 use Symfony\Component\HttpFoundation\Request;
 use CertBundle\Form\ImportarType;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class CertificadoController extends Controller {
 
@@ -19,50 +18,50 @@ class CertificadoController extends Controller {
         $this->sesion = new Session();
     }
 
-    public function envioAction($usuario_id) {
-        $em = $this->getDoctrine()->getManager();
-        $Usuario_repo = $em->getRepository("CertBundle:Usuario");
-        $Fichero_repo = $em->getRepository("CertBundle:Fichero");
-        $Usuario = $Usuario_repo->find($usuario_id);
-        $Fichero = $Fichero_repo->queryByUsuario($usuario_id);
-
-        if ($Fichero) {
-            $mail = new PHPMailer();
-            $mail->IsHTML(true);
-            $mail->IsSMTP();
-            $mail->AddAddress($Usuario->getEmail());
-            $mail->SMTPAuth = false;
-            $mail->Port = 25;
-            $mail->Host = 'mail.madrid.org';
-            $mail->Username = "jano@salud.madrid.org.com";
-            $mail->Password = 'Vado_1965';
-            $mail->From = 'dtrh@salud.madrid.org.com';
-            $mail->FromName = 'PRUEBAS DE JOSE LUIS';
-            $mail->CharSet = 'UTF-8';
-            $mail->Subject = 'CERTIFICADO DE SERVICIOS CONCURSO DE MOVILIDAD';
-            $mail->Body = 'CERTIFICADO DE SERVICIOS CONCURSO DE MOVILIDAD';
-
-            $rootDir = $this->get('kernel')->getRootDir();
-            $path = $rootDir . '/../web/certificados/';
-
-            $ad = $path . $Fichero["fichero"];
-            $mail->addAttachment($ad);
-            $enviado = $mail->Send();
-            if ($enviado) {
-                $status = 'CERTIFICADO ENVIADO CORRECTAMENTE';
-            } else {
-                $status = 'ERROR EN ENVIO DE CERTIFICADO';
-            }
-        } else {
-            $status = 'ERROR NO EXISTE CERTIFICADO PARA ESTE DNI:'
-                    . $Usuario->getDni()
-                    . ' '
-                    . $Usuario->getNombre();
-        }
-
-        $this->sesion->getFlashBag()->add("status", $status);
-        return $this->render('CertBundle:Default:enviado.html.twig');
-    }
+//    public function envioAction($usuario_id) {
+//        $em = $this->getDoctrine()->getManager();
+//        $Usuario_repo = $em->getRepository("CertBundle:Usuario");
+//        $Fichero_repo = $em->getRepository("CertBundle:Fichero");
+//        $Usuario = $Usuario_repo->find($usuario_id);
+//        $Fichero = $Fichero_repo->queryByUsuario($usuario_id);
+//
+//        if ($Fichero) {
+//            $mail = new PHPMailer();
+//            $mail->IsHTML(true);
+//            $mail->IsSMTP();
+//            $mail->AddAddress($Usuario->getEmail());
+//            $mail->SMTPAuth = false;
+//            $mail->Port = 25;
+//            $mail->Host = 'mail.madrid.org';
+//            $mail->Username = "jano@salud.madrid.org.com";
+//            $mail->Password = 'Vado_1965';
+//            $mail->From = 'dtrh@salud.madrid.org.com';
+//            $mail->FromName = 'PRUEBAS DE JOSE LUIS';
+//            $mail->CharSet = 'UTF-8';
+//            $mail->Subject = 'CERTIFICADO DE SERVICIOS CONCURSO DE MOVILIDAD';
+//            $mail->Body = 'CERTIFICADO DE SERVICIOS CONCURSO DE MOVILIDAD';
+//
+//            $rootDir = $this->get('kernel')->getRootDir();
+//            $path = $rootDir . '/../web/certificados/';
+//
+//            $ad = $path . $Fichero["fichero"];
+//            $mail->addAttachment($ad);
+//            $enviado = $mail->Send();
+//            if ($enviado) {
+//                $status = 'CERTIFICADO ENVIADO CORRECTAMENTE';
+//            } else {
+//                $status = 'ERROR EN ENVIO DE CERTIFICADO';
+//            }
+//        } else {
+//            $status = 'ERROR NO EXISTE CERTIFICADO PARA ESTE DNI:'
+//                    . $Usuario->getDni()
+//                    . ' '
+//                    . $Usuario->getNombre();
+//        }
+//
+//        $this->sesion->getFlashBag()->add("status", $status);
+//        return $this->render('CertBundle:Default:enviado.html.twig');
+//    }
 
     public function descargaAction($usuario_id) {
         $em = $this->getDoctrine()->getManager();
@@ -96,7 +95,7 @@ class CertificadoController extends Controller {
             $mail->Host = 'mail.madrid.org';
             $mail->Username = "jano@salud.madrid.org.com";
             $mail->Password = 'Vado_1965';
-            $mail->From = 'carrera.profesional@salud.madrid.org';
+            $mail->From = 'carrera.profesional.ap@salud.madrid.org';
             $mail->FromName = 'Dirección Técnica de RR.HH. de Atención Primaria';
             $mail->CharSet = 'UTF-8';
             $mail->Subject = 'Descarga del Certificado de Servicios Prestados en Atención Primaria';
@@ -144,47 +143,47 @@ class CertificadoController extends Controller {
         return;
     }
 
-//    public function envioCorreccionAction() {
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $Correo_repo = $em->getRepository("CertBundle:Correo");
-//        $Correos = $Correo_repo->findAll();
-//        foreach ($Correos as $Correo) {
-//            $this->enviaMailCorreccion($Correo->getUsuario()->getEmail());
-//        }
-//        return $this->render('CertBundle:Default:enviadaCorreccion.html.twig');
-//    }
-//    public function enviaMailCorreccion($email) {
-//        $mail = new PHPMailer();
-//        $mail->IsHTML(true);
-//        $mail->IsSMTP();
-//        $mail->AddAddress($email);
-//        $mail->SMTPAuth = false;
-//        $mail->Port = 25;
-//        $mail->Host = 'mail.madrid.org';
-//        $mail->Username = "jano@salud.madrid.org.com";
-//        $mail->Password = 'Vado_1965';
-//        $mail->From = 'movilidad.interna.ap@salud.madrid.org';
-//        $mail->FromName = 'Dirección Técnica de RR.HH. de Atención Primaria';
-//        $mail->CharSet = 'UTF-8';
-//        $mail->Subject = 'Correción del Certificado de Servicios Prestados en Atención Primaria';
-//        $mail->Body = ' Estimado/a Compañero/a: <br/><br/>'
-//                . ' Habiendose detectado un error, <strong><u>que no afecta al baremo</u></strong>, '
-//                . ' en la confección del certificado emitido para el proceso de movilidad interna'
-//                . ' en A.P., te comunicamos que tienes la posibilidad de volver a consultar el nuevo '
-//                . ' certificado corregido. <br/><br/>'
-//                . ' Este nuevo certificado no corrige las posibles reclamaciones de nuevos periodos y/o'
-//                . ' modificación de apartados <br/><br/>'
-//                . ' Atentamente, <br/>'
-//                . ' <strong>Movilidad Interna</strong> <br/>'
-//                . ' Dirección Técnica de RRHH de Atención Primaria<br/>'
-//                . ' C/ San Martín de Porres 6, Planta 4ª <br/>'
-//                . ' 28035 Madrid <br/>'
-//                . ' e-mail: movilidad.interna.ap@salud.madrid.org';
-//
-//        $enviado = $mail->Send();
-//        return $enviado;
-//    }
+    public function envioCorreccionAction() {
+        $em = $this->getDoctrine()->getManager();
+
+        $Correo_repo = $em->getRepository("CertBundle:Correo");
+        $Correos = $Correo_repo->findAll();
+        foreach ($Correos as $Correo) {
+            $this->enviaMailCorreccion($Correo->getUsuario()->getEmail());
+        }
+        return $this->render('CertBundle:Default:enviadaCorreccion.html.twig');
+    }
+    public function enviaMailCorreccion($email) {
+        $mail = new PHPMailer();
+        $mail->IsHTML(true);
+        $mail->IsSMTP();
+        $mail->AddAddress($email);
+        $mail->SMTPAuth = false;
+        $mail->Port = 25;
+        $mail->Host = 'mail.madrid.org';
+        $mail->Username = "jano@salud.madrid.org.com";
+        $mail->Password = 'Vado_1965';
+        $mail->From = 'movilidad.interna.ap@salud.madrid.org';
+        $mail->FromName = 'Dirección Técnica de RR.HH. de Atención Primaria';
+        $mail->CharSet = 'UTF-8';
+        $mail->Subject = 'Correción del Certificado de Servicios Prestados en Atención Primaria';
+        $mail->Body = ' Estimado/a Compañero/a: <br/><br/>'
+                . ' Habiendose detectado un error, <strong><u>que no afecta al baremo</u></strong>, '
+                . ' en la confección del certificado emitido para el proceso de movilidad interna'
+                . ' en A.P., te comunicamos que tienes la posibilidad de volver a consultar el nuevo '
+                . ' certificado corregido. <br/><br/>'
+                . ' Este nuevo certificado no corrige las posibles reclamaciones de nuevos periodos y/o'
+                . ' modificación de apartados <br/><br/>'
+                . ' Atentamente, <br/>'
+                . ' <strong>Movilidad Interna</strong> <br/>'
+                . ' Dirección Técnica de RRHH de Atención Primaria<br/>'
+                . ' C/ San Martín de Porres 6, Planta 4ª <br/>'
+                . ' 28035 Madrid <br/>'
+                . ' e-mail: movilidad.interna.ap@salud.madrid.org';
+
+        $enviado = $mail->Send();
+        return $enviado;
+    }
 
     public function cargaFicheroAction(Request $request) {
         $ImportarForm = $this->createForm(ImportarType::class);

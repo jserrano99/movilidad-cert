@@ -383,15 +383,30 @@
 	<connector name="VALIDACION" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.46-bin.jar" driver_desc="Standard" host="icmbdlva003.madrid.org" port="3306" instance="jano" user="proco_jano" passwd="cHJvY29famFubw==" />
 	<connector name="movilidad-cert-local" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.46-bin.jar" driver_desc="Standard" host="localhost" port="3306" instance="jano" user="root" />
 	<layout name="CERTIFICADOS" id="Layout_241de89" show_relation="columns" >
-		<entity schema="jano" name="cert_usuario" color="C1D8EE" x="48" y="224" />
-		<entity schema="jano" name="cert_log_descarga" color="C1D8EE" x="256" y="240" />
 		<entity schema="jano" name="cert_correo" color="3986C1" x="64" y="496" />
 		<entity schema="jano" name="cert_corregidos" color="3986C1" x="192" y="496" />
+		<entity schema="jano" name="cert_usuario" color="C1D8EE" x="48" y="224" />
 		<entity schema="jano" name="cert_acceso" color="C1D8EE" x="112" y="48" />
+		<entity schema="jano" name="cert_log_descarga" color="C1D8EE" x="256" y="240" />
 		<entity schema="jano" name="cert_ficheros" color="C1D8EE" x="464" y="272" />
 		<script name="Sql_Editor" id="Editor_164ca70" language="SQL" >
 			<string><![CDATA[select * from cert_ficheros  inner join cert_usuario on cert_usuario.dni = cert_ficheros.dni  where cert_usuario.id = 1]]></string>
 		</script>
+		<script name="Sql_Editor_001" id="Editor_551f2" language="SQL" >
+			<string><![CDATA[DELETE FROM cert_acceso]]></string>
+		</script>
+		<browser id="Browse_15aa4ec" name="cert_acceso" confirm_updates="y" >
+			<browse_table schema="jano" entity="cert_acceso" x="20" y="20" width="400" height="300" />
+		</browser>
+		<browser id="Browse_277ffe7" name="cert_ficheros" confirm_updates="y" >
+			<browse_table schema="jano" entity="cert_ficheros" x="20" y="20" width="400" height="300" />
+		</browser>
+		<browser id="Browse_1a96311" name="cert_log_descarga" confirm_updates="y" >
+			<browse_table schema="jano" entity="cert_log_descarga" x="20" y="20" width="400" height="300" />
+		</browser>
+		<browser id="Browse_34d5aed" name="cert_usuario" confirm_updates="y" >
+			<browse_table schema="jano" entity="cert_usuario" x="20" y="20" width="400" height="300" />
+		</browser>
 	</layout>
 	<layout name="GENERAL" id="Layout_51dd7a1" show_relation="columns" >
 		<entity schema="jano" name="adjuntos" color="C8F5BF" x="1184" y="288" />

@@ -14,7 +14,7 @@ class ImportarType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('fichero', FileType::class, array(
-                    "label" => 'Fichero',
+                    "label" => 'Fichero a Cargar',
                     "mapped" => false,
                     "required" => false,
                     "attr" => array("class" => "form-control")))
